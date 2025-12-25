@@ -34,7 +34,7 @@ const products = [
         name: "Leather Loafers",
         category: "shoes",
         price: 8900,
-        image: "https://images.unsplash.com/photo-1533867617858-e7b97e0605df?q=80&w=1000&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1614252369475-531eba835eb1?q=80&w=1000&auto=format&fit=crop",
         description: "Genuine leather loafers, hand-stitched for durability and comfort.",
         featured: false,
         new: true
@@ -44,7 +44,7 @@ const products = [
         name: "Gemstone Pendant Necklace",
         category: "accessories",
         price: 5500,
-        image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1000&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1599643478518-17488fbbcd75?q=80&w=1000&auto=format&fit=crop",
         description: "A delicate necklace featuring a semi-precious stone found in Sri Lanka.",
         featured: false,
         new: true
