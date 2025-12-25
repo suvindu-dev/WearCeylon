@@ -4,7 +4,7 @@ const products = [
         name: "Classic Linen Shirt",
         category: "men",
         price: 4500,
-        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?q=80&w=1925&auto=format&fit=crop",
         description: "Premium quality linen shirt perfect for the tropical climate. Breathable and stylish.",
         featured: true,
         new: false
@@ -14,7 +14,7 @@ const products = [
         name: "Heritage Batik Saree",
         category: "women",
         price: 12500,
-        image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1610189012906-47833cc740d1?auto=format&fit=crop&q=80&w=800",
         description: "Handcrafted batik saree featuring traditional Sri Lankan motifs with a modern twist.",
         featured: true,
         new: true
@@ -24,7 +24,7 @@ const products = [
         name: "Gold Chronograph Watch",
         category: "watches",
         price: 25000,
-        image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&q=80&w=800",
         description: "Elegant gold-tone chronograph watch for the modern gentleman.",
         featured: true,
         new: false
@@ -34,7 +34,7 @@ const products = [
         name: "Leather Loafers",
         category: "shoes",
         price: 8900,
-        image: "https://images.unsplash.com/photo-1614252369475-531eba835eb1?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1533867617858-e7b97e0605df?auto=format&fit=crop&q=80&w=800",
         description: "Genuine leather loafers, hand-stitched for durability and comfort.",
         featured: false,
         new: true
@@ -44,7 +44,7 @@ const products = [
         name: "Gemstone Pendant Necklace",
         category: "accessories",
         price: 5500,
-        image: "https://images.unsplash.com/photo-1599643478518-17488fbbcd75?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1602751584552-8ba420da5271?auto=format&fit=crop&q=80&w=800",
         description: "A delicate necklace featuring a semi-precious stone found in Sri Lanka.",
         featured: false,
         new: true
@@ -54,7 +54,7 @@ const products = [
         name: "Modern Kurta Top",
         category: "women",
         price: 3200,
-        image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=800",
         description: "Contemporary kurta top suitable for casual and semi-formal occasions.",
         featured: true,
         new: false
