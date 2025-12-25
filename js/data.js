@@ -14,7 +14,7 @@ const products = [
         name: "Heritage Batik Saree",
         category: "women",
         price: 12500,
-        image: "https://images.unsplash.com/photo-1610189012906-47833cc740d1?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&q=80&w=1000",
         description: "Handcrafted batik saree featuring traditional Sri Lankan motifs with a modern twist.",
         featured: true,
         new: true
@@ -24,7 +24,7 @@ const products = [
         name: "Gold Chronograph Watch",
         category: "watches",
         price: 25000,
-        image: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&q=80&w=1000",
         description: "Elegant gold-tone chronograph watch for the modern gentleman.",
         featured: true,
         new: false
@@ -34,7 +34,7 @@ const products = [
         name: "Leather Loafers",
         category: "shoes",
         price: 8900,
-        image: "https://images.unsplash.com/photo-1533867617858-e7b97e0605df?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&q=80&w=1000",
         description: "Genuine leather loafers, hand-stitched for durability and comfort.",
         featured: false,
         new: true
@@ -44,7 +44,7 @@ const products = [
         name: "Gemstone Pendant Necklace",
         category: "accessories",
         price: 5500,
-        image: "https://images.unsplash.com/photo-1602751584552-8ba420da5271?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1599643478518-17488fbbcd75?auto=format&fit=crop&q=80&w=1000",
         description: "A delicate necklace featuring a semi-precious stone found in Sri Lanka.",
         featured: false,
         new: true
@@ -54,7 +54,7 @@ const products = [
         name: "Modern Kurta Top",
         category: "women",
         price: 3200,
-        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=1000",
         description: "Contemporary kurta top suitable for casual and semi-formal occasions.",
         featured: true,
         new: false
@@ -62,10 +62,10 @@ const products = [
 ];
 
 const categories = [
-    { id: 'men', name: "Men's Wear", image: "https://images.unsplash.com/photo-1488161628813-994252662622?auto=format&fit=crop&q=80&w=800" },
-    { id: 'women', name: "Women's Wear", image: "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&q=80&w=800" },
-    { id: 'watches', name: "Watches", image: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&q=80&w=800" },
-    { id: 'shoes', name: "Shoes", image: "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&q=80&w=800" },
+    { id: 'men', name: "Men's Wear", image: "https://images.unsplash.com/photo-1488161628813-994252662622?auto=format&fit=crop&q=80&w=1000" },
+    { id: 'women', name: "Women's Wear", image: "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&q=80&w=1000" },
+    { id: 'watches', name: "Watches", image: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&q=80&w=1000" },
+    { id: 'shoes', name: "Shoes", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=1000" },
 ];
 
 export { products, categories };
