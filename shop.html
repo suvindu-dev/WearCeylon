@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | WearCeylon</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Wear<span>Ceylon</span></a>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="shop.html" class="nav-item active">Shop</a>
+                <a href="shop.html?cat=men" class="nav-item">Men</a>
+                <a href="shop.html?cat=women" class="nav-item">Women</a>
+                <a href="about.html" class="nav-item">About</a>
+                <a href="contact.html" class="nav-item">Contact</a>
+            </nav>
+
+            <div class="nav-icons">
+                <button id="theme-toggle" class="icon-btn">🌙</button>
+                <a href="wishlist.html" class="icon-btn">♡</a>
+                <a href="cart.html" class="icon-btn">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+                <button class="menu-toggle">
+                    ☰
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="section bg-light" style="padding: 40px 0;">
+        <div class="container">
+            <h1 class="section-title" id="page-title">All Products</h1>
+        </div>
+    </section>
+
+    <!-- Shop Content -->
+    <section class="section">
+        <div class="container">
+            <!-- Filter / Toolbar could go here -->
+            <div class="toolbar"
+                style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+                <p id="result-count">Showing all products</p>
+                <select id="sort-select" style="padding: 8px; border-radius: 4px; border: 1px solid #ddd;">
+                    <option value="default">Sort by: Default</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                </select>
+            </div>
+
+            <div id="shop-grid" class="product-grid">
+                <!-- Products injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>WearCeylon</h3>
+                    <p>Modern Style. Heritage Roots.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="shop.html?cat=men">Men's</a></li>
+                        <li><a href="shop.html?cat=women">Women's</a></li>
+                        <li><a href="shop.html?cat=watches">Watches</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#">IG</a>
+                        <a href="#">FB</a>
+                        <a href="#">TW</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 WearCeylon. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { products } from './js/data.js';
+
+        // Simple logic specific to shop page (rest handled by main.js)
+        const grid = document.getElementById('shop-grid');
+        const pageTitle = document.getElementById('page-title');
+        const sortSelect = document.getElementById('sort-select');
+
+        // Get category from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('cat');
+
+        let displayProducts = [...products];
+
+        if (category) {
+            displayProducts = displayProducts.filter(p => p.category === category);
+            pageTitle.textContent = category.charAt(0).toUpperCase() + category.slice(1) + "'s Collection";
+            // Adjust title for Watches/Shoes
+            if (category === 'watches') pageTitle.textContent = "Luxury Timepieces";
+            if (category === 'shoes') pageTitle.textContent = "Footwear Collection";
+        }
+
+        function render(items) {
+            grid.innerHTML = items.map(product => `
+                <div class="product-card">
+                    <a href="product.html?id=${product.id}" class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                        ${product.new ? '<span class="badge badge-new">New</span>' : ''}
+                    </a>
+                    <div class="product-info">
+                        <span class="product-category">${product.category}</span>
+                        <a href="product.html?id=${product.id}">
+                            <h3 class="product-title">${product.name}</h3>
+                        </a>
+                        <p class="product-price">LKR ${product.price.toLocaleString()}</p>
+                        <button class="btn-add-cart" onclick="window.addToCart(${product.id})">Add to Cart</button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('result-count').innerText = `Showing ${items.length} products`;
+        }
+
+        sortSelect.addEventListener('change', (e) => {
+            const val = e.target.value;
+            let sorted = [...displayProducts];
+            if (val === 'price-asc') sorted.sort((a, b) => a.price - b.price);
+            if (val === 'price-desc') sorted.sort((a, b) => b.price - a.price);
+            render(sorted);
+        });
+
+        render(displayProducts);
+    </script>
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

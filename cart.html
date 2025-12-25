@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | WearCeylon</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .cart-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-xl);
+        }
+
+        .cart-items {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+        }
+
+        .cart-item {
+            display: flex;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+        }
+
+        .item-details {
+            flex-grow: 1;
+        }
+
+        .item-details h4 {
+            margin-bottom: var(--spacing-xxs);
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-sm);
+        }
+
+        .quantity-btn {
+            background: #eee;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .cart-summary {
+            background: var(--color-light-gray);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            height: fit-content;
+        }
+
+        [data-theme="dark"] .cart-summary {
+            background: #1e1e1e;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .total-row {
+            border-top: 1px solid #ccc;
+            padding-top: var(--spacing-md);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: var(--spacing-md);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: var(--spacing-xxl);
+        }
+
+        @media(max-width: 768px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Wear<span>Ceylon</span></a>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="shop.html" class="nav-item">Shop</a>
+                <a href="about.html" class="nav-item">About</a>
+                <a href="contact.html" class="nav-item">Contact</a>
+            </nav>
+            <div class="nav-icons">
+                <button id="theme-toggle" class="icon-btn">🌙</button>
+                <a href="cart.html" class="icon-btn" style="color: var(--color-gold);">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+                <button class="menu-toggle">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container">
+            <h1 class="section-title">Your Shopping Cart</h1>
+            <div id="cart-view">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- Same footer as index -->
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 WearCeylon. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { products } from './js/data.js';
+
+        const cartView = document.getElementById('cart-view');
+
+        function loadCart() {
+            return JSON.parse(localStorage.getItem('wearceylon_cart')) || [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('wearceylon_cart', JSON.stringify(cart));
+            renderCart();
+            // Update global count
+            const total = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelectorAll('.cart-count').forEach(el => el.textContent = total);
+        }
+
+        window.updateQuantity = (id, change) => {
+            let cart = loadCart();
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            saveCart(cart);
+        };
+
+        window.removeItem = (id) => {
+            let cart = loadCart();
+            cart = cart.filter(i => i.id !== id);
+            saveCart(cart);
+        };
+
+        function renderCart() {
+            const cart = loadCart();
+
+            if (cart.length === 0) {
+                cartView.innerHTML = `
+                    <div class="empty-cart">
+                        <h2>Your cart is empty</h2>
+                        <p>Looks like you haven't added anything yet.</p>
+                        <a href="shop.html" class="btn" style="margin-top: 1rem;">Start Shopping</a>
+                    </div>
+                `;
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            cartView.innerHTML = `
+                <div class="cart-container">
+                    <div class="cart-items">
+                        ${cart.map(item => `
+                            <div class="cart-item">
+                                <img src="${item.image}" alt="${item.name}">
+                                <div class="item-details">
+                                    <h4>${item.name}</h4>
+                                    <p>${item.category}</p>
+                                    <p style="color: var(--color-gold);">LKR ${item.price.toLocaleString()}</p>
+                                    <div class="item-controls">
+                                        <button class="quantity-btn" onclick="window.updateQuantity(${item.id}, -1)">-</button>
+                                        <span>${item.quantity}</span>
+                                        <button class="quantity-btn" onclick="window.updateQuantity(${item.id}, 1)">+</button>
+                                        <button onclick="window.removeItem(${item.id})" style="color: red; margin-left: auto; font-size: 0.8rem;">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="cart-summary">
+                        <h3>Order Summary</h3>
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span>LKR ${total.toLocaleString()}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span>Calculated at checkout</span>
+                        </div>
+                        <div class="summary-row total-row">
+                            <span>Total</span>
+                            <span>LKR ${total.toLocaleString()}</span>
+                        </div>
+                        <button class="btn" style="width: 100%; margin-top: 1rem;">Proceed to Checkout</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        renderCart();
+    </script>
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

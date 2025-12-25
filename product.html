@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | WearCeylon</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .product-detail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xxl);
+            align-items: center;
+        }
+
+        .detail-image img {
+            width: 100%;
+            border-radius: var(--radius-md);
+        }
+
+        .detail-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .detail-price {
+            font-size: 1.5rem;
+            color: var(--color-gold);
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .detail-controls {
+            margin: var(--spacing-lg) 0;
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-sm);
+        }
+
+        .quantity-selector button {
+            padding: 10px 15px;
+            font-size: 1.2rem;
+        }
+
+        .quantity-selector input {
+            width: 50px;
+            text-align: center;
+            border: none;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Wear<span>Ceylon</span></a>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="shop.html" class="nav-item">Shop</a>
+                <a href="about.html" class="nav-item">About</a>
+                <a href="contact.html" class="nav-item">Contact</a>
+            </nav>
+            <div class="nav-icons">
+                <button id="theme-toggle" class="icon-btn">🌙</button>
+                <a href="wishlist.html" class="icon-btn">♡</a>
+                <a href="cart.html" class="icon-btn">🛒<span class="cart-count">0</span></a>
+                <button class="menu-toggle">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container" id="product-container">
+            <!-- Injected via JS -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 WearCeylon. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { products } from './js/data.js';
+
+        const container = document.getElementById('product-container');
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = parseInt(urlParams.get('id'));
+
+        const product = products.find(p => p.id === productId);
+
+        if (product) {
+            document.title = `${product.name} | WearCeylon`;
+            container.innerHTML = `
+                <div class="product-detail-container">
+                    <div class="detail-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="detail-info">
+                        <span style="color: #888; text-transform: uppercase; letter-spacing: 1px;">${product.category}</span>
+                        <h1>${product.name}</h1>
+                        <p class="detail-price">LKR ${product.price.toLocaleString()}</p>
+                        <p style="margin-bottom: 2rem; line-height: 1.8;">${product.description}</p>
+                        
+                        <div class="detail-controls">
+                            <div class="quantity-selector">
+                                <button onclick="window.adjustQty(-1)">-</button>
+                                <input type="text" id="qty-input" value="1" readonly>
+                                <button onclick="window.adjustQty(1)">+</button>
+                            </div>
+                            <button class="btn" style="flex-grow: 1;" onclick="window.addToCartWithQty(${product.id})">Add to Cart</button>
+                            <button class="btn btn-secondary" onclick="window.addToWishlist(${product.id})">♡</button>
+                        </div>
+                        
+                        <div style="margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1rem;">
+                            <p><strong>Free Shipping</strong> on orders over LKR 10,000</p>
+                            <p><strong>Easy Returns</strong> within 14 days</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            container.innerHTML = `<h2>Product not found</h2><a href="shop.html" class="btn">Back to Shop</a>`;
+        }
+
+        window.adjustQty = (delta) => {
+            const input = document.getElementById('qty-input');
+            let val = parseInt(input.value);
+            val += delta;
+            if (val < 1) val = 1;
+            input.value = val;
+        };
+
+        window.addToCartWithQty = (id) => {
+            const qty = parseInt(document.getElementById('qty-input').value);
+            // We use the global state from main.js but we need to implement the qty logic
+            // Since main.js exports addToCart which just adds 1, we'll do a quick custom implementation here reading from localStorage
+            // Or better, just loop call addToCart or manually update cart.
+
+            let cart = JSON.parse(localStorage.getItem('wearceylon_cart')) || [];
+            let item = cart.find(i => i.id === id);
+            if (item) {
+                item.quantity += qty;
+            } else {
+                cart.push({ ...product, quantity: qty });
+            }
+            localStorage.setItem('wearceylon_cart', JSON.stringify(cart));
+
+            // Dispatch event or reload or just alert
+            alert('Added to cart!');
+            window.location.href = 'cart.html';
+        };
+
+        // Wishlist Stub
+        window.addToWishlist = (id) => {
+            alert('Added to wishlist!');
+        }
+    </script>
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>
